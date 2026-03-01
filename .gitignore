@@ -1,4 +1,5 @@
 website/database.db
 env/
 website/__pycache__/
-.gitignore
+.env
+*.env

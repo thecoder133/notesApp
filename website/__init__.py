@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from os import path
+from os import path, getenv
 from flask_login import LoginManager
+from dotenv import load_dotenv
+
+load_dotenv()
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -9,7 +12,12 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "dsakfjh654aljhfdslkjh6f53644sdalkja33h"
+
+    secret_key = getenv("SECRET_KEY")
+    if not secret_key:
+        raise RuntimeError("No secret key varible was found!")
+
+    app.config["SECRET_KEY"] = secret_key
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + path.join(path.dirname(__file__), '..', f'{DB_NAME}')
     db.init_app(app)
 
