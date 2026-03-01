@@ -1,0 +1,3 @@
+website/database.db
+env/
+website/__pycache__/

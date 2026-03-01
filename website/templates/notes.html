@@ -1,23 +1,46 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Notes{% endblock %} {% block content
+%}
 
-{% block title %}Home{% endblock %}
+<div class="container mt-5" style="max-width: 700px">
+  <h1 class="text-center mb-4">📝 Notes</h1>
 
-{% block content %}
-<h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
+  <ul class="list-group shadow-sm mb-4" id="notes">
     {% for note in user.notes %}
-        <li class="list-group-item">{{ note.data }}
-        <button type="button" class="close" onClick="deleteNote({{ note.id }})">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </li>
-    {% endfor %}
-</ul>
-<form method="POST">
-    <textarea name="note" id="note" class="form-control"></textarea>
-    <br>
-    <div align="center">
-        <button type="submit" class="btn btn-primary">Add Note</button>        
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ note.data }}
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-danger"
+        onClick="deleteNote({{ note.id }})"
+      >
+        &times;
+      </button>
+    </li>
+    {% endfor %} {% if user.notes|length == 0 %}
+    <li class="list-group-item text-center text-muted">
+      No notes yet. Add one below!
+    </li>
+    {% endif %}
+  </ul>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form method="POST">
+        <textarea
+          name="note"
+          id="note"
+          class="form-control mb-3"
+          rows="3"
+          placeholder="Write a note..."
+          style="resize: none"
+        ></textarea>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Add Note</button>
+        </div>
+      </form>
     </div>
-</form>
+  </div>
+</div>
 {% endblock %}
